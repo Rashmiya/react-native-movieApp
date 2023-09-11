@@ -13,6 +13,9 @@ const TvShow = ({navigation}: any) => {
   interface TvShowDetails {
     poster_path: String;
     name: String;
+    adult?: boolean;
+    popularity?: Number;
+    overview?: String;
   }
 
   const [tv, setTv] = useState([]);
@@ -42,13 +45,27 @@ const TvShow = ({navigation}: any) => {
       .then(json => setTv(json.results))
       .catch(err => console.error('error:' + err));
   };
+
+  function collectData(item: TvShowDetails) {
+    // collect each data as an object to send ShowDetails page
+    const dataset = {
+      poster_path: item.poster_path,
+      name: item.name,
+      adult: item.adult,
+      popularity: item.popularity,
+      overview: item.overview,
+    };
+    // console.log('collected Data:', dataset);
+    navigation.navigate('ShowDetails', {data: dataset, title: 'TV Shows'});
+  }
+
   return (
     <ScrollView>
       <View style={styles.mainContent}>
         {tv.map((item: TvShowDetails, _index) => (
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('ShowDetails');
+              collectData(item);
             }}>
             <View style={styles.containerCard}>
               <Image

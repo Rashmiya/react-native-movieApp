@@ -1,10 +1,20 @@
-import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
-const Movie = () => {
+const Movie = ({navigation}: any) => {
   interface movieDetails {
     poster_path: String;
     title: String;
+    adult?: boolean;
+    popularity?: Number;
+    overview?: String;
   }
 
   const [movie, setMovie] = useState([]);
@@ -14,7 +24,7 @@ const Movie = () => {
   }, []);
 
   useEffect(() => {
-    console.log(movie);
+    console.log('movie details:', movie);
   }, [movie]);
 
   const loadMovies = async () => {
@@ -34,11 +44,26 @@ const Movie = () => {
       .then(json => setMovie(json.results))
       .catch(err => console.error('error:' + err));
   };
+  function collectData(item: movieDetails) {
+    // collect each data as an object to send ShowDetails page
+    const dataset = {
+      poster_path: item.poster_path,
+      title: item.title,
+      adult: item.adult,
+      popularity: item.popularity,
+      overview: item.overview,
+    };
+    // console.log('collected Data:', dataset);
+    navigation.navigate('ShowDetails', {data: dataset, title: 'Movies'});
+  }
   return (
     <ScrollView>
       <View style={styles.mainContent}>
         {movie.map((item: movieDetails, _index) => (
-          <>
+          <TouchableOpacity
+            onPress={() => {
+              collectData(item);
+            }}>
             <View style={styles.containerCard}>
               <Image
                 source={{
@@ -48,7 +73,7 @@ const Movie = () => {
               />
               <Text style={styles.text}>{item.title}</Text>
             </View>
-          </>
+          </TouchableOpacity>
         ))}
       </View>
     </ScrollView>
