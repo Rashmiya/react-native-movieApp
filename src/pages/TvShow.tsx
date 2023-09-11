@@ -9,7 +9,7 @@ import {
 
 import React, {useEffect, useState} from 'react';
 
-const TvShow = () => {
+const TvShow = ({navigation}: any) => {
   interface TvShowDetails {
     poster_path: String;
     name: String;
@@ -48,7 +48,7 @@ const TvShow = () => {
         {tv.map((item: TvShowDetails, _index) => (
           <TouchableOpacity
             onPress={() => {
-              console.log('first');
+              navigation.navigate('ShowDetails');
             }}>
             <View style={styles.containerCard}>
               <Image

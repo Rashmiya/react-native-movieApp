@@ -1,11 +1,26 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import MyTabs from './src/components/Tabs';
+import Tabs from './src/components/Tabs';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import ShowDetails from './src/pages/ShowDetails';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <MyTabs />
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Tabs"
+          component={Tabs}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ShowDetails"
+          component={ShowDetails}
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
