@@ -2,6 +2,11 @@ import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 const Movie = () => {
+  interface movieDetails {
+    poster_path: String;
+    title: String;
+  }
+
   const [movie, setMovie] = useState([]);
 
   useEffect(() => {
@@ -32,7 +37,7 @@ const Movie = () => {
   return (
     <ScrollView>
       <View style={styles.mainContent}>
-        {movie.map((item, _index) => (
+        {movie.map((item: movieDetails, _index) => (
           <>
             <View style={styles.containerCard}>
               <Image

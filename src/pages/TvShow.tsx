@@ -1,7 +1,20 @@
-import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+
 import React, {useEffect, useState} from 'react';
 
-const Movie = () => {
+const TvShow = () => {
+  interface TvShowDetails {
+    poster_path: String;
+    name: String;
+  }
+
   const [tv, setTv] = useState([]);
 
   useEffect(() => {
@@ -14,7 +27,7 @@ const Movie = () => {
 
   const loadTv = async () => {
     const url =
-    'https://api.themoviedb.org/3/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc';
+      'https://api.themoviedb.org/3/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc';
     const options = {
       method: 'GET',
       headers: {
@@ -32,8 +45,11 @@ const Movie = () => {
   return (
     <ScrollView>
       <View style={styles.mainContent}>
-        {tv.map((item, _index) => (
-          <>
+        {tv.map((item: TvShowDetails, _index) => (
+          <TouchableOpacity
+            onPress={() => {
+              console.log('first');
+            }}>
             <View style={styles.containerCard}>
               <Image
                 source={{
@@ -43,14 +59,14 @@ const Movie = () => {
               />
               <Text style={styles.text}>{item.name}</Text>
             </View>
-          </>
+          </TouchableOpacity>
         ))}
       </View>
     </ScrollView>
   );
 };
 
-export default Movie;
+export default TvShow;
 
 const styles = StyleSheet.create({
   text: {
